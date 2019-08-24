@@ -6,8 +6,10 @@ import TextField from 'material-ui/TextField';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import { Redirect } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom'
 // var apiBaseUrl = "http://localhost:4000/api/";
 import axios from 'axios';
+import StoreDetails from './StoreDetails';
 //import UploadPage from './UploadPage';
 class Login extends Component {
   constructor(props) {
@@ -74,33 +76,36 @@ class Login extends Component {
   handleClick(event) {
     var self = this;
     var payload = {
-      "userid": this.state.username,
-      "password": this.state.password,
-      "role": this.state.loginRole
+      "personUserName": this.state.personUserName,
+      "personId": this.state.personId,
+      "personPassword": this.state.personPassword,
+      "personName": this.state.personName
     }
 
+ var apiBaseUrl = "http://localhost:8080/";
+      axios.post(apiBaseUrl+'storePersonLogin/login', payload)
+     .then(function (response) {
+       console.log(response.status);
+       console.log("@@@@"+response.status==200);
+       if(response.status == 200){
 
-    //   axios.post(apiBaseUrl+'login', payload)
-    //  .then(function (response) {
-    //    console.log(response);
-    //    if(response.data.code == 200){
-    //      console.log("Login successfull");
+         console.log("Login successfull");
+         alert("Login successfull");
          var uploadScreen=[];
+         //<Redirect to="/login" />
+         //<Route path='' component={StoreDetails} />
+       
         //uploadScreen.push(<UploadPage appContext={self.props.appContext} role={self.state.loginRole}/>)
     //      self.props.appContext.setState({loginPage:[],uploadScreen:uploadScreen})
-    //    }
-    //    else if(response.data.code == 204){
-    //      console.log("Username password do not match");
-    //      alert(response.data.success)
-    //    }
-    //    else{
-    //      console.log("Username does not exists");
-    //      alert("Username does not exist");
-    //    }
-    //  })
-    //  .catch(function (error) {
-    //    console.log(error);
-    //  });
+       }
+       else{
+         console.log("Username does not exists");
+         alert("Username does not exist");
+       }
+     })
+     .catch(function (error) {
+       console.log(error);
+     });
   }
   handleMenuChange(value) {
     console.log("menuvalue", value);

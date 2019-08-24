@@ -5,7 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
-//var apiBaseUrl = "http://10.0.0.71:8080/";
+//var apiBaseUrl = "http://localhost:8080/";
 import axios from 'axios';
 //import UploadPage from './UploadPage';
 class StoreDetails extends Component {
@@ -66,13 +66,13 @@ class StoreDetails extends Component {
       "approvalStatus": this.state.approvalStatus,
       "remarks":this.state.remarks
     }
-    var apiBaseUrl = "http://10.0.0.71:8080/";
+    var apiBaseUrl = "http://localhost:8080/";
     //post body
       axios.post(apiBaseUrl+'store/addStore', payload)
      .then(function (response) {
        console.log(response);
-       if(response.data.code == 200){
-         console.log("Login successfull");
+       if(response.status == 200){
+         console.log("Saved successful");
         //  var uploadScreen=[];
         //  uploadScreen.push(<UploadPage appContext={self.props.appContext} role={self.state.loginRole}/>)
         //  self.props.appContext.setState({loginPage:[],uploadScreen:uploadScreen})
